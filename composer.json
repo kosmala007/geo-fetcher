@@ -1,0 +1,17 @@
+{
+    "name": "devpack/geo-fetcher",
+    "description": "Library for retrieving coordinates for addresses and vice versa",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcin Kosmala",
+            "email": "kosmala007@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "symfony/var-dumper": "^4.4",
+        "phpunit/phpunit": "^8.5"
+    }
+}
