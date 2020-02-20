@@ -10,8 +10,6 @@ use DevPack\GeoFetcher\Utility\LangIso;
 
 class ConfigFactory
 {
-    const DEF_LANG = 'en';
-
     private $args = [];
 
     public function create(array $args): Config
