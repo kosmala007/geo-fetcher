@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace DevPack\GedmoTreeRecalc\Tests;
 
 use DevPack\GeoFetcher\Adapter\AdapterInterface;
-use DevPack\GeoFetcher\Config;
-use DevPack\GeoFetcher\Exception\InvalidConfigArgsException;
 use DevPack\GeoFetcher\Factory\AdapterFactory;
 use DevPack\GeoFetcher\Factory\ConfigFactory;
-use DevPack\GeoFetcher\GeoFetcher;
 use PHPUnit\Framework\TestCase;
 
 class AdapterTest extends TestCase

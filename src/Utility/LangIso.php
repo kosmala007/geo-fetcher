@@ -7,7 +7,7 @@ class LangIso
     const DEF_CODE = 'en';
 
     /**
-     * ISO 639-1
+     * ISO 639-1.
      */
     const CODES = [
         'ab' => 'Abkhazian',

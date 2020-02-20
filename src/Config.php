@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DevPack\GeoFetcher;
 
 class Config
@@ -37,7 +39,7 @@ class Config
         return $this;
     }
 
-    public function getLang():?string
+    public function getLang(): ?string
     {
         return $this->lang;
     }

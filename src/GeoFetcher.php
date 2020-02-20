@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DevPack\GeoFetcher;
 
 use DevPack\GeoFetcher\Factory\AdapterFactory;
@@ -19,11 +21,11 @@ class GeoFetcher
 
     public function fetchCoordinates(array $input)
     {
-        # code...
+        // code...
     }
 
     public function fetchAddresses(array $input)
     {
-        # code...
+        // code...
     }
 }

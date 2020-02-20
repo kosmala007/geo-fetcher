@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DevPack\GeoFetcher\Adapter;
 
 use DevPack\GeoFetcher\Config;
