@@ -2,6 +2,7 @@
 
 namespace DevPack\GeoFetcher;
 
+use DevPack\GeoFetcher\Factory\AdapterFactory;
 use DevPack\GeoFetcher\Factory\ConfigFactory;
 
 class GeoFetcher
@@ -12,6 +13,8 @@ class GeoFetcher
     {
         $factory = new ConfigFactory();
         $config = $factory->create($args);
+
+        $this->adapter = AdapterFactory::create($config);
     }
 
     public function fetchCoordinates(array $input)
