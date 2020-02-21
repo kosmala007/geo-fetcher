@@ -9,7 +9,10 @@
             "email": "kosmala007@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "symfony/property-access": "^4.4"
+    },
     "require-dev": {
         "symfony/var-dumper": "^4.4",
         "phpunit/phpunit": "^8.5"
