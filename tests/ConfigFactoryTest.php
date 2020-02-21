@@ -10,20 +10,22 @@ use DevPack\GeoFetcher\Factory\ConfigFactory;
 use DevPack\GeoFetcher\GeoFetcher;
 use PHPUnit\Framework\TestCase;
 
-class ConfigTest extends TestCase
+class ConfigFactoryTest extends TestCase
 {
     public function testMissingApiKey()
     {
         $this->expectException(InvalidConfigArgsException::class);
 
-        $geoFetcher = new GeoFetcher([]);
+        $configFactory = new ConfigFactory();
+        $configFactory->create([]);
     }
 
     public function testMissingProvider()
     {
         $this->expectException(InvalidConfigArgsException::class);
 
-        $geoFetcher = new GeoFetcher([
+        $configFactory = new ConfigFactory();
+        $configFactory->create([
             'apiKey' => 'xyz',
         ]);
     }
@@ -32,7 +34,8 @@ class ConfigTest extends TestCase
     {
         $this->expectException(InvalidConfigArgsException::class);
 
-        $geoFetcher = new GeoFetcher([
+        $configFactory = new ConfigFactory();
+        $configFactory->create([
             'apiKey' => 'xyz',
             'provider' => 'anything',
         ]);
@@ -42,7 +45,8 @@ class ConfigTest extends TestCase
     {
         $this->expectException(InvalidConfigArgsException::class);
 
-        $geoFetcher = new GeoFetcher([
+        $configFactory = new ConfigFactory();
+        $configFactory->create([
             'apiKey' => 'xyz',
             'provider' => 'GoogleMaps',
             'lang' => 'oo',
