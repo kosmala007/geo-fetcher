@@ -18,4 +18,18 @@ class OpenStreetMapsAdapter implements AdapterInterface
     {
         $this->config = $config;
     }
+
+    public function fetchCoordinates(array $array): array
+    {
+        $result = [];
+
+        return $result;
+    }
+
+    public function fetchAddresses(array $array): array
+    {
+        $result = [];
+
+        return $result;
+    }
 }
