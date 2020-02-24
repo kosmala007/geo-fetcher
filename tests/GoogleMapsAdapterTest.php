@@ -11,9 +11,9 @@ use DevPack\GeoFetcher\Factory\AdapterFactory;
 use DevPack\GeoFetcher\Factory\ConfigFactory;
 use PHPUnit\Framework\TestCase;
 
-class AdapterTest extends TestCase
+class GoogleMapsAdapterTest extends TestCase
 {
-    public function testGoogleMapsAdapterCreate()
+    public function testCreate()
     {
         $configFactory = new ConfigFactory();
         $config = $configFactory->create([
@@ -26,20 +26,7 @@ class AdapterTest extends TestCase
         $this->assertInstanceOf(AdapterInterface::class, $adapter);
     }
 
-    public function testOpenStreetMapsAdapterCreate()
-    {
-        $configFactory = new ConfigFactory();
-        $config = $configFactory->create([
-            'apiKey' => 'xyz',
-            'provider' => 'OpenStreetMaps',
-            'lang' => 'pl',
-        ]);
-        $adapter = AdapterFactory::create($config);
-
-        $this->assertInstanceOf(AdapterInterface::class, $adapter);
-    }
-
-    public function testGoogleMapsAdapterFailedStatus()
+    public function testFailedStatus()
     {
         $this->expectException(AdapterApiFailureException::class);
 
@@ -55,7 +42,7 @@ class AdapterTest extends TestCase
         ]);
     }
 
-    public function testGoogleMapsAdapterFetchCoordinates()
+    public function testFetchCoordinates()
     {
         $configFactory = new ConfigFactory();
         $config = $configFactory->create([
@@ -75,7 +62,7 @@ class AdapterTest extends TestCase
         $this->assertIsFloat($result[0]['lng']);
     }
 
-    public function testGoogleMapsAdapterFetchAddresesInvalidInput()
+    public function testFetchAddresesInvalidInput()
     {
         $this->expectException(InvalidLatLngArrayException::class);
         $configFactory = new ConfigFactory();
@@ -93,7 +80,7 @@ class AdapterTest extends TestCase
         ]);
     }
 
-    public function testGoogleMapsAdapterFetchAddreses()
+    public function testFetchAddreses()
     {
         $configFactory = new ConfigFactory();
         $config = $configFactory->create([
