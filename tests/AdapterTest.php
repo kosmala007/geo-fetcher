@@ -6,6 +6,7 @@ namespace DevPack\GedmoTreeRecalc\Tests;
 
 use DevPack\GeoFetcher\Adapter\AdapterInterface;
 use DevPack\GeoFetcher\Exception\AdapterApiFailureException;
+use DevPack\GeoFetcher\Exception\InvalidLatLngArrayException;
 use DevPack\GeoFetcher\Factory\AdapterFactory;
 use DevPack\GeoFetcher\Factory\ConfigFactory;
 use PHPUnit\Framework\TestCase;
@@ -72,5 +73,21 @@ class AdapterTest extends TestCase
         $this->assertArrayHasKey('lng', $result[0]);
         $this->assertIsFloat($result[0]['lat']);
         $this->assertIsFloat($result[0]['lng']);
+    }
+
+    public function testGoogleMapsAdapterFetchAddresesInvalidInput()
+    {
+        $this->expectException(InvalidLatLngArrayException::class);
+        $configFactory = new ConfigFactory();
+        $config = $configFactory->create([
+            'apiKey' => $_ENV['GOOGLE_API_KEY'],
+            'provider' => 'GoogleMaps',
+            'lang' => 'pl',
+        ]);
+        $adapter = AdapterFactory::create($config);
+        $adapter->fetchAddresses([
+            'lat' => null,
+            'lng' => null,
+        ]);
     }
 }

@@ -7,6 +7,7 @@ namespace DevPack\GeoFetcher\Adapter;
 use DevPack\GeoFetcher\Config;
 use DevPack\GeoFetcher\Exception\AdapterApiFailureException;
 use DevPack\GeoFetcher\Exception\HttpFailureStatusException;
+use DevPack\GeoFetcher\Exception\InvalidLatLngArrayException;
 use GuzzleHttp\Client;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -59,6 +60,11 @@ class GoogleMapsAdapter implements AdapterInterface
     public function fetchAddresses(array $array): array
     {
         $result = [];
+        foreach ($array as $latLng) {
+            if (empty($latLng['lat']) || empty($latLng['lng'])) {
+                throw new InvalidLatLngArrayException();
+            }
+        }
 
         return $result;
     }
