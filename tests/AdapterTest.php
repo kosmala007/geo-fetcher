@@ -53,4 +53,24 @@ class AdapterTest extends TestCase
             'Kielce Mickiewicza 1',
         ]);
     }
+
+    public function testGoogleMapsAdapterFetchCoordinates()
+    {
+        $configFactory = new ConfigFactory();
+        $config = $configFactory->create([
+            'apiKey' => $_ENV['GOOGLE_API_KEY'],
+            'provider' => 'GoogleMaps',
+            'lang' => 'pl',
+        ]);
+        $adapter = AdapterFactory::create($config);
+        $result = $adapter->fetchCoordinates([
+            'Kielce Mickiewicza 1',
+        ]);
+
+        $this->assertArrayHasKey(0, $result);
+        $this->assertArrayHasKey('lat', $result[0]);
+        $this->assertArrayHasKey('lng', $result[0]);
+        $this->assertIsFloat($result[0]['lat']);
+        $this->assertIsFloat($result[0]['lng']);
+    }
 }

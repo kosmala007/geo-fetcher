@@ -6,22 +6,26 @@ namespace DevPack\GeoFetcher\Adapter;
 
 use DevPack\GeoFetcher\Config;
 use DevPack\GeoFetcher\Exception\AdapterApiFailureException;
-use GuzzleHttp\Client;
 use DevPack\GeoFetcher\Exception\HttpFailureStatusException;
+use GuzzleHttp\Client;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class GoogleMapsAdapter implements AdapterInterface
 {
     use AdapterTrait;
 
     const ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json?';
+    const PROPERTY_PATH = '[results][0][geometry][location]';
 
     private $config;
     private $client;
+    private $propertyAccessor;
 
     public function __construct(Config $config)
     {
         $this->config = $config;
         $this->client = new Client();
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
     public function fetchCoordinates(array $array): array
@@ -29,7 +33,8 @@ class GoogleMapsAdapter implements AdapterInterface
         $result = [];
         foreach ($array as $address) {
             $response = $this->client->request('GET',
-                self::ENDPOINT.'key='.$this->config->getApiKey().'&address='.urlencode($address)
+                self::ENDPOINT.'key='.$this->config->getApiKey().
+                '&address='.urlencode($address)
             );
 
             if (200 != $response->getStatusCode()) {
@@ -43,6 +48,9 @@ class GoogleMapsAdapter implements AdapterInterface
                     'Error message: '.$content['error_message']
                 );
             }
+
+            $latLng = $this->propertyAccessor->getValue($content, self::PROPERTY_PATH);
+            $result[] = $latLng;
         }
 
         return $result;
