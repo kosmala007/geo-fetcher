@@ -86,8 +86,40 @@ class AdapterTest extends TestCase
         ]);
         $adapter = AdapterFactory::create($config);
         $adapter->fetchAddresses([
-            'lat' => null,
-            'lng' => null,
+            [
+                'lat' => null,
+                'lng' => null,
+            ]
         ]);
+    }
+
+    public function testGoogleMapsAdapterFetchAddreses()
+    {
+        $configFactory = new ConfigFactory();
+        $config = $configFactory->create([
+            'apiKey' => $_ENV['GOOGLE_API_KEY'],
+            'provider' => 'GoogleMaps',
+            'lang' => 'pl',
+        ]);
+        $adapter = AdapterFactory::create($config);
+        $result = $adapter->fetchAddresses([
+            [
+                'lat' => 50.869023,
+                'lng' => 20.634476,
+            ]
+        ]);
+
+        $expected = [
+            'country' => 'Poland',
+            'administrative_area_level_1' => 'świętokrzyskie',
+            'locality' => 'Kielce',
+            'route' => 'Henryka Sienkiewicza',
+            'postal_code' => '25-354',
+            'street_number' => '3',
+            'lat' => 50.869023,
+            'lng' => 20.634476,
+        ];
+
+        $this->assertEqualsCanonicalizing($expected, $result[0]);
     }
 }
