@@ -14,10 +14,24 @@ class ConfigFactory
 
     public function create(array $args): Config
     {
-        $this->args = $args;
-        $this
-            ->validate()
-            ->prepare();
+        if (empty($args['apiKey'])) {
+            throw new InvalidConfigArgsException('Missing API key.');
+        }
+        if (empty($args['provider'])) {
+            throw new InvalidConfigArgsException('Missing provider.');
+        }
+        if (!in_array($args['provider'], Config::PROVIDERS)) {
+            throw new InvalidConfigArgsException('Unrecognized provider.');
+        }
+        if (!empty($args['lang']) && !LangIso::isExist($args['lang'])) {
+            throw new InvalidConfigArgsException(
+                'Unrecognized lang iso code. Use ISO 639-1 standard.'
+            );
+        }
+
+        if (!isset($args['lang'])) {
+            $args['lang'] = LangIso::DEF_CODE;
+        }
 
         $config = new Config();
         $config
@@ -26,36 +40,5 @@ class ConfigFactory
             ->setLang($args['lang']);
 
         return $config;
-    }
-
-    public function validate(): self
-    {
-        if (empty($this->args['apiKey'])) {
-            throw new InvalidConfigArgsException('Missing API key.');
-        }
-        if (empty($this->args['provider'])) {
-            throw new InvalidConfigArgsException('Missing provider.');
-        }
-        if (!in_array($this->args['provider'], Config::PROVIDERS)) {
-            throw new InvalidConfigArgsException('Unrecognized provider.');
-        }
-        if (!empty($this->args['lang'])
-            && !LangIso::isExist($this->args['lang'])
-        ) {
-            throw new InvalidConfigArgsException(
-                'Unrecognized lang iso code. Use ISO 639-1 standard.'
-            );
-        }
-
-        return $this;
-    }
-
-    public function prepare(): self
-    {
-        if (!isset($this->args['lang'])) {
-            $this->args['lang'] = LangIso::DEF_CODE;
-        }
-
-        return $this;
     }
 }
