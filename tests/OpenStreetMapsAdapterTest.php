@@ -15,12 +15,29 @@ class OpenStreetMapsAdapterTest extends TestCase
     {
         $configFactory = new ConfigFactory();
         $config = $configFactory->create([
-            'apiKey' => 'xyz',
             'provider' => 'OpenStreetMaps',
             'lang' => 'pl',
         ]);
         $adapter = AdapterFactory::create($config);
 
         $this->assertInstanceOf(AdapterInterface::class, $adapter);
+    }
+
+    public function testFetchCoordinates()
+    {
+        $configFactory = new ConfigFactory();
+        $config = $configFactory->create([
+            'provider' => 'OpenStreetMaps',
+            'lang' => 'pl',
+        ]);
+        $adapter = AdapterFactory::create($config);
+        $result = $adapter->fetchCoordinates([
+            'Kielce, Mickiewicza 1',
+        ]);
+
+        $this->assertArrayHasKey('lat', $result);
+        $this->assertArrayHasKey('lng', $result);
+        $this->assertIsFloat($result['lat']);
+        $this->assertIsFloat($result['lng']);
     }
 }
