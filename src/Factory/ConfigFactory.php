@@ -30,6 +30,7 @@ class ConfigFactory
         if (!isset($args['lang'])) {
             $args['lang'] = LangIso::DEF_CODE;
         }
+        $args['apiKey'] = $args['apiKey'] ?? null;
 
         $config = new Config();
         $config
