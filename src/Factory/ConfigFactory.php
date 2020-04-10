@@ -10,11 +10,9 @@ use DevPack\GeoFetcher\Utility\LangIso;
 
 class ConfigFactory
 {
-    private $args = [];
-
     public function create(array $args): Config
     {
-        if (empty($args['apiKey'])) {
+        if (empty($args['apiKey']) && 'GoogleMaps' == $args['provider']) {
             throw new InvalidConfigArgsException('Missing API key.');
         }
         if (empty($args['provider'])) {
