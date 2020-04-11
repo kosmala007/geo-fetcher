@@ -11,6 +11,9 @@ use DevPack\GeoFetcher\Exception\InvalidLatLngArrayException;
 use GuzzleHttp\Client;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
+/**
+ * @see https://developers.google.com/maps/documentation/geocoding/start
+ */
 class GoogleMapsAdapter implements AdapterInterface
 {
     use AdapterTrait;
