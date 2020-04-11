@@ -19,13 +19,17 @@ class GeoFetcher
         $this->adapter = AdapterFactory::create($config);
     }
 
-    public function fetchCoordinates(array $input)
+    public function fetchCoordinates(array $input): array
     {
-        // code...
+        $result = $this->adapter->fetchCoordinates($input);
+
+        return $result;
     }
 
-    public function fetchAddresses(array $input)
+    public function fetchAddresses(array $input): array
     {
-        // code...
+        $result = $this->adapter->fetchAddresses($input);
+
+        return $result;
     }
 }
