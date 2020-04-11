@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevPack\GedmoTreeRecalc\Tests;
+namespace DevPack\GeoFetcher\Tests;
 
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevPack\GedmoTreeRecalc\Tests;
+namespace DevPack\GeoFetcher\Tests;
 
 use DevPack\GeoFetcher\Adapter\AdapterInterface;
 use DevPack\GeoFetcher\Exception\InvalidLatLngArrayException;
