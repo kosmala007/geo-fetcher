@@ -47,9 +47,12 @@ class OpenStreetMapsAdapter implements AdapterInterface
             }
 
             $content = json_decode($response->getBody()->getContents(), true);
-
             $lat = (float) $this->propertyAccessor->getValue($content, '[0][lat]');
             $lng = (float) $this->propertyAccessor->getValue($content, '[0][lon]');
+            if (empty($lat) || empty($lng)) {
+                throw new AdapterApiFailureException('No in response lat or lng');
+            }
+
             $result = [
                 'lat' => $lat,
                 'lng' => $lng,
