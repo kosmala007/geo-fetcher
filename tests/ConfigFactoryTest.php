@@ -12,14 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigFactoryTest extends TestCase
 {
-    public function testMissingApiKey()
-    {
-        $this->expectException(InvalidConfigArgsException::class);
-
-        $configFactory = new ConfigFactory();
-        $configFactory->create([]);
-    }
-
     public function testMissingProvider()
     {
         $this->expectException(InvalidConfigArgsException::class);
@@ -27,6 +19,16 @@ class ConfigFactoryTest extends TestCase
         $configFactory = new ConfigFactory();
         $configFactory->create([
             'apiKey' => 'xyz',
+        ]);
+    }
+
+    public function testMissingApiKey()
+    {
+        $this->expectException(InvalidConfigArgsException::class);
+
+        $configFactory = new ConfigFactory();
+        $configFactory->create([
+            'provider' => 'GoogleMaps',
         ]);
     }
 
