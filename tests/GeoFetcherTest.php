@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace DevPack\GeoFetcher\Tests;
 
-use DevPack\GeoFetcher\Factory\ConfigFactory;
 use DevPack\GeoFetcher\GeoFetcher;
 use PHPUnit\Framework\TestCase;
 
-class ConfigFactoryTest extends TestCase
+class GeoFetcherTest extends TestCase
 {
     public function testFetchCoordinates()
     {
