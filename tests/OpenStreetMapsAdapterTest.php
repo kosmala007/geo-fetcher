@@ -58,4 +58,32 @@ class OpenStreetMapsAdapterTest extends TestCase
             ]
         ]);
     }
+
+    public function testFetchAddreses()
+    {
+        $configFactory = new ConfigFactory();
+        $config = $configFactory->create([
+            'provider' => 'OpenStreetMaps',
+            'lang' => 'pl',
+        ]);
+        $adapter = AdapterFactory::create($config);
+        $result = $adapter->fetchAddresses([
+            [
+                'lat' => 50.869023,
+                'lng' => 20.634476,
+            ]
+        ]);
+
+        $expected = [
+            'country' => 'Polska',
+            'administrative_area_level_1' => 'województwo świętokrzyskie',
+            'locality' => 'Kielce',
+            'route' => 'Henryka Sienkiewicza',
+            'postal_code' => '25-350',
+            'street_number' => '3',
+            'lat' => 50.869023,
+            'lng' => 20.634476,
+        ];
+        $this->assertEqualsCanonicalizing($expected, $result[0]);
+    }
 }

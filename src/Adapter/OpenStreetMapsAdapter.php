@@ -18,7 +18,8 @@ class OpenStreetMapsAdapter implements AdapterInterface
 {
     use AdapterTrait;
 
-    const ENDPOINT = 'https://nominatim.openstreetmap.org/search?format=json&';
+    const ENDPOINT_SEARCH = 'https://nominatim.openstreetmap.org/search?format=json&';
+    const ENDPOINT_REVERSE = 'https://nominatim.openstreetmap.org/reverse?format=json&';
 
     private $config;
     private $client;
@@ -39,7 +40,7 @@ class OpenStreetMapsAdapter implements AdapterInterface
         $result = [];
         foreach ($array as $address) {
             $response = $this->client->request('GET',
-                self::ENDPOINT.'q='.urlencode($address)
+                self::ENDPOINT_SEARCH.'q='.urlencode($address)
             );
 
             if (200 != $response->getStatusCode()) {
@@ -69,7 +70,36 @@ class OpenStreetMapsAdapter implements AdapterInterface
             if (empty($latLng['lat']) || empty($latLng['lng'])) {
                 throw new InvalidLatLngArrayException();
             }
+
+            $response = $this->client->request('GET',
+                self::ENDPOINT_REVERSE.'lat='.$latLng['lat'].'&lon='.$latLng['lng']
+            );
+
+            if (200 != $response->getStatusCode()) {
+                throw new HttpFailureStatusException($response->getStatusCode());
+            }
+
+            $content = json_decode($response->getBody()->getContents(), true);
+
+            $parts = $this->getAddressParts($content);
+            $parts = array_merge($parts, $latLng);
+
+            $result[] = $parts;
         }
+
+        return $result;
+    }
+
+    public function getAddressParts(array $data): array
+    {
+        $result = [
+            'country' => $this->propertyAccessor->getValue($data, '[address][country]'),
+            'administrative_area_level_1' => $this->propertyAccessor->getValue($data, '[address][state]'),
+            'locality' => $this->propertyAccessor->getValue($data, '[address][city]'),
+            'route' => $this->propertyAccessor->getValue($data, '[address][pedestrian]'),
+            'postal_code' => $this->propertyAccessor->getValue($data, '[address][postcode]'),
+            'street_number' => $this->propertyAccessor->getValue($data, '[address][house_number]'),
+        ];
 
         return $result;
     }
