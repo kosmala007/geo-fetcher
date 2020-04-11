@@ -65,6 +65,11 @@ class OpenStreetMapsAdapter implements AdapterInterface
     public function fetchAddresses(array $array): array
     {
         $result = [];
+        foreach ($array as $latLng) {
+            if (empty($latLng['lat']) || empty($latLng['lng'])) {
+                throw new InvalidLatLngArrayException();
+            }
+        }
 
         return $result;
     }
