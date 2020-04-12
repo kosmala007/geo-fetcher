@@ -9,8 +9,18 @@ GeoFetcher has two providers implemented:
 
 ## How it use?
 
-1. Install by composer
-2. Create instance GeoFetcher and use it
+### Instalation
+
+```
+composer install ...
+```
+
+### Initialize GeoFetcher
+
+#### Available providers
+
+* GoogleMaps
+* OpenStreetMaps
 
 ```php
 <?php
@@ -18,16 +28,39 @@ GeoFetcher has two providers implemented:
 use DevPack\GeoFetcher\GeoFetcher;
 
 $geoFetcher = new GeoFetcher([
-    'apiKey' => 'yourApiKey',
-    'provider' => 'GoogleMaps',
-    'lang' => 'pl',
+    'apiKey' => 'yourApiKey',     // required if You use GoogleMaps
+    'provider' => 'GoogleMaps',   // one from available providers
+    'lang' => 'pl',               // code ISO 639-1
 ]);
+```
 
+### Fetch Coordinates from addres string
+
+Paramter is array of addreses and GeoFetcher always return array
+
+```php
 // Feth coordinates from adress - parameter must be array
 $result = $geoFetcher->fetchCoordinates(
     ['Kielce, Mickiewicza 1'],
 );
+```
 
+#### Example response
+
+```php
+array:1 [
+    0 => array:2 [
+        "lat" => 50.8676012
+        "lng" => 20.6329186
+    ]
+]
+```
+
+### Fetch address details deom coordinates
+
+Paramter is array of addreses and GeoFetcher always return array
+
+```php
 // Fetch address from coordinates - parameter must be array
 $result = $geoFetcher->fetchAddresses([
     [
@@ -35,5 +68,21 @@ $result = $geoFetcher->fetchAddresses([
         'lng' => 20.634476,
     ],
 ]);
+```
 
+#### Example response
+
+```php
+array:1 [
+    0 => array:8 [
+        "country" => "Polska"
+        "administrative_area_level_1" => "województwo świętokrzyskie"
+        "locality" => "Kielce"
+        "route" => "Henryka Sienkiewicza"
+        "postal_code" => "25-350"
+        "street_number" => "3"
+        "lat" => 50.869023
+        "lng" => 20.634476
+    ]
+]
 ```
