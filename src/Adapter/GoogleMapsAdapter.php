@@ -36,10 +36,8 @@ class GoogleMapsAdapter implements AdapterInterface
     {
         $result = [];
         foreach ($array as $address) {
-            $response = $this->client->request('GET',
-                self::ENDPOINT.'key='.$this->config->getApiKey().
-                '&address='.urlencode($address)
-            );
+            $url = self::ENDPOINT.'key='.$this->config->getApiKey().'&address='.urlencode($address);
+            $response = $this->client->request('GET', $url);
 
             if (200 != $response->getStatusCode()) {
                 throw new HttpFailureStatusException($response->getStatusCode());
@@ -68,10 +66,8 @@ class GoogleMapsAdapter implements AdapterInterface
                 throw new InvalidLatLngArrayException();
             }
 
-            $response = $this->client->request('GET',
-                self::ENDPOINT.'key='.$this->config->getApiKey().
-                '&latlng='.$latLng['lat'].','.$latLng['lng']
-            );
+            $url = self::ENDPOINT.'key='.$this->config->getApiKey().'&latlng='.$latLng['lat'].','.$latLng['lng'];
+            $response = $this->client->request('GET', $url);
 
             if (200 != $response->getStatusCode()) {
                 throw new HttpFailureStatusException($response->getStatusCode());

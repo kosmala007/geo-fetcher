@@ -39,9 +39,8 @@ class OpenStreetMapsAdapter implements AdapterInterface
     {
         $result = [];
         foreach ($array as $address) {
-            $response = $this->client->request('GET',
-                self::ENDPOINT_SEARCH.'q='.urlencode($address)
-            );
+            $url = self::ENDPOINT_SEARCH.'q='.urlencode($address);
+            $response = $this->client->request('GET', $url);
 
             if (200 != $response->getStatusCode()) {
                 throw new HttpFailureStatusException($response->getStatusCode());
@@ -71,9 +70,8 @@ class OpenStreetMapsAdapter implements AdapterInterface
                 throw new InvalidLatLngArrayException();
             }
 
-            $response = $this->client->request('GET',
-                self::ENDPOINT_REVERSE.'lat='.$latLng['lat'].'&lon='.$latLng['lng']
-            );
+            $url = self::ENDPOINT_REVERSE.'lat='.$latLng['lat'].'&lon='.$latLng['lng'];
+            $response = $this->client->request('GET', $url);
 
             if (200 != $response->getStatusCode()) {
                 throw new HttpFailureStatusException($response->getStatusCode());
