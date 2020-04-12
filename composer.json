@@ -15,7 +15,12 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^4.4",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "edgedesign/phpqa": "^1.23",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "vimeo/psalm": "^3.10",
+        "sensiolabs/security-checker": "^6.0",
+        "jakub-onderka/php-parallel-lint": "^1.0"
     },
     "autoload": {
         "psr-4": {
