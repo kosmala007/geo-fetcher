@@ -56,7 +56,7 @@ array:1 [
 ]
 ```
 
-### Fetch address details deom coordinates
+### Fetch address details from coordinates
 
 Paramter is array of addreses and GeoFetcher always return array
 
