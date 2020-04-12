@@ -12,7 +12,7 @@ GeoFetcher has two providers implemented:
 ### Instalation
 
 ```
-composer install ...
+composer require devpack/geo-fetcher
 ```
 
 ### Initialize GeoFetcher
